@@ -1,0 +1,107 @@
+body { 
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #ffffff; /* fondo claro por defecto */
+  color: #000000;            /* texto negro */
+  padding: 20px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.claro {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+body.oscuro {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+/* 🎛️ Botones generales */
+button {
+  padding: 10px 16px;
+  background-color: #e0e0e0;
+  color: #000;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.oscuro button {
+  background-color: #333;
+  color: #fff;
+}
+
+/* 🧭 Menú de navegación (pestañas) */
+#menu {
+  margin-bottom: 20px;
+}
+
+#menu button {
+  padding: 10px 15px;
+  margin-right: 10px;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* 🗂️ Secciones de contenido (Controles / Sensores) */
+.seccion {
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.oscuro .seccion {
+  background-color: #1e1e1e;
+  color: #f0f0f0;
+}
+
+/* 🎮 Ayuda flotante para controles por teclado */
+#teclaAyuda {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #ffffffdd;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px 15px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  font-size: 14px;
+  z-index: 1000;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.oscuro #teclaAyuda {
+  background-color: #1f1f1fdd;
+  color: #f0f0f0;
+  border-color: #444;
+}
+body {
+  max-width: 100%;
+  padding: 1rem;
+}
+
+.seccion {
+  width: 100%;
+  max-width: 600px; /* o el máximo que quieras */
+  margin: 0 auto;
+}
+#menu {
+  display: flex;
+  flex-wrap: wrap; /* Para que los botones puedan ir a otra línea en pantallas pequeñas */
+  gap: 10px;
+}
+@media (max-width: 600px) {
+  #menu button {
+    flex: 1 1 100%; /* botones de ancho completo en móviles */
+  }
+
+  .seccion {
+    padding: 10px;
+  }
+}
