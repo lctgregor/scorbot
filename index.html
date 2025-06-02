@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Control ESCORBOT ER-4u</title>
+
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body class="claro">
+  <h1>Control del Brazo ESCORBOT ER-4u</h1>
+
+  <!-- Menú de navegación -->
+  <div id="menu">
+    <button onclick="mostrarSeccion('controles')">🎮 Controles</button>
+    <button onclick="mostrarSeccion('sensores')">🌡️ Sensores y Gráficos</button>
+  </div>
+
+  <!-- Sección: CONTROLES -->
+  <div id="seccion-controles" class="seccion">
+    <div id="controls">
+      <label for="servo1">Servo 1:</label>
+      <input type="range" id="servo1" min="0" max="180" value="90" oninput="updateServo(1, this.value)" />
+      <span id="val1">90</span>°
+      <button onclick="moverServo(1, 5)">▲</button>
+      <button onclick="moverServo(1, -5)">▼</button>
+      <br /><br />
+
+      <label for="servo2">Servo 2:</label>
+      <input type="range" id="servo2" min="0" max="180" value="90" oninput="updateServo(2, this.value)" />
+      <span id="val2">90</span>°
+      <button onclick="moverServo(2, 5)">▲</button>
+      <button onclick="moverServo(2, -5)">▼</button>
+      <br /><br />
+
+      <label for="servo3">Servo 3:</label>
+      <input type="range" id="servo3" min="0" max="180" value="90" oninput="updateServo(3, this.value)" />
+      <span id="val3">90</span>°
+      <button onclick="moverServo(3, 5)">▲</button>
+      <button onclick="moverServo(3, -5)">▼</button>
+      <br /><br />
+
+      <label for="servo4">Servo 4:</label>
+      <input type="range" id="servo4" min="0" max="180" value="90" oninput="updateServo(4, this.value)" />
+      <span id="val4">90</span>°
+      <button onclick="moverServo(4, 5)">▲</button>
+      <button onclick="moverServo(4, -5)">▼</button>
+      <br /><br />
+    </div>
+
+    <button onclick="ejecutarSecuencia('saludo')">🖐 Saludo</button>
+    <button onclick="ejecutarSecuencia('recojer')">📦 Recoger objeto</button>
+    <br />
+    <button id="btnTema">🌓 Cambiar tema</button>
+  </div>
+
+  <!-- Sección: SENSORES Y GRÁFICOS -->
+  <div id="seccion-sensores" class="seccion" style="display: none;">
+    <h2>Lecturas de sensores</h2>
+    <div id="sensores">
+      <p>Temperatura: <span id="temp">--</span> °C</p>
+      <p>Humedad: <span id="hum">--</span> %</p>
+    </div>
+
+    <h2>Temperatura en tiempo real</h2>
+    <canvas id="graficoTemp" width="400" height="200"></canvas>
+  </div>
+
+  <!-- Guía de teclas -->
+  <div id="teclaAyuda">
+    <h3>🕹️ Controles por Teclado</h3>
+    <ul>
+      <li><strong>↑ / ↓</strong> → Servo 1</li>
+      <li><strong>← / →</strong> → Servo 2</li>
+      <li><strong>W / S</strong> → Servo 3</li>
+      <li><strong>A / D</strong> → Servo 4</li>
+    </ul>
+  </div>
+
+  <!-- Script principal -->
+  <script>
+    // Mostrar u ocultar secciones
+    function mostrarSeccion(nombre) {
+      const secciones = {
+        controles: document.getElementById("seccion-controles"),
+        sensores: document.getElementById("seccion-sensores"),
+      };
+
+      for (const key in secciones) {
+        secciones[key].style.display = (key === nombre) ? "block" : "none";
+      }
+    }
+
+    // Cambiar tema y guardar preferencia
+    const btnTema = document.getElementById("btnTema");
+    const body = document.body;
+
+    // Al cargar, aplicar tema guardado
+    const temaGuardado = localStorage.getItem("tema");
+    if (temaGuardado) {
+      body.classList.remove("claro", "oscuro");
+      body.classList.add(temaGuardado);
+    } else {
+      // Default
+      body.classList.add("claro");
+    }
+
+    btnTema.addEventListener("click", () => {
+      if (body.classList.contains("claro")) {
+        body.classList.replace("claro", "oscuro");
+        localStorage.setItem("tema", "oscuro");
+      } else {
+        body.classList.replace("oscuro", "claro");
+        localStorage.setItem("tema", "claro");
+      }
+    });
+
+    // Función para mover servos con botones
+    function moverServo(servoNumber, delta) {
+      const slider = document.getElementById("servo" + servoNumber);
+      const valSpan = document.getElementById("val" + servoNumber);
+      if (!slider || !valSpan) return;
+
+      let nuevoValor = parseInt(slider.value) + delta;
+      if (nuevoValor > 180) nuevoValor = 180;
+      if (nuevoValor < 0) nuevoValor = 0;
+
+      slider.value = nuevoValor;
+      valSpan.textContent = nuevoValor;
+      updateServo(servoNumber, nuevoValor);
+    }
+  </script>
+
+  <script src="script.js"></script>
+</body>
+</html>
